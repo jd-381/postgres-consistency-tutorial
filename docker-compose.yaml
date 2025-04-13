@@ -1,0 +1,34 @@
+services:
+  publisher:
+    image: postgres:latest
+    container_name: p1
+    hostname: p1
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - '8000:5432'
+    volumes:
+      - pgdata-pub:/var/lib/postgresql/data 
+      - ./config/postgresql.conf:/etc/postgresql/postgresql.conf # configured to enable logical replication
+    command: postgres -c 'config_file=/etc/postgresql/postgresql.conf'
+    restart: unless-stopped
+ 
+  subscriber:
+    image: postgres:latest
+    container_name: s1
+    hostname: s1
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - '8001:5432'
+    volumes:
+      - pgdata-sub:/var/lib/postgresql/data 
+    restart: unless-stopped
+ 
+volumes:
+  pgdata-pub:
+  pgdata-sub:
