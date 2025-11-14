@@ -1,6 +1,6 @@
 services:
   publisher:
-    image: postgres:latest
+    image: postgres:17.7
     container_name: p1
     hostname: p1
     environment:
@@ -16,7 +16,7 @@ services:
     restart: unless-stopped
  
   subscriber:
-    image: postgres:latest
+    image: postgres:17.7
     container_name: s1
     hostname: s1
     environment:
